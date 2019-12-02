@@ -1,6 +1,6 @@
 ## re:Invent 2019 SVS217
 
-Welcome to the re:Invent SVS217 builder session! This README walks you through steps to use the AWS SAM CLI to create, package, and publish an [AWS SAM](https://aws.amazon.com/serverless/sam/) serverless application to the [AWS Serverless Application Repository](https://aws.amazon.com/serverless/serverlessrepo/) or AWS SAR.
+Welcome to the re:Invent SVS217 builder session! This README walks you through steps to use the AWS SAM CLI to create, package, and publish an [AWS SAM](https://aws.amazon.com/serverless/sam/) serverless application to the [AWS Serverless Application Repository](https://aws.amazon.com/serverless/serverlessrepo/) (AWS SAR).
 
 ## Prerequisites
 
@@ -14,9 +14,11 @@ In order to complete this session, you must first complete the following prerequ
 
 First, let's get familiar with SAM CLI by using it to initialize, build, and deploy a simple hello world app. Walk through Steps 1-3 of [Tutorial: Deploying a Hello World Application](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html) from the AWS SAM Getting Started documentation.
 
+By the end of this tutorial, you should have deployed a sample hello world endpoint and been able to make a request to it using the `curl` command.
+
 ## Publishing your app to SAR
 
-Now that you've created a sample application using SAM, you can use SAM CLI to publish it to the AWS Serverless Application Repository (SAR), allowing you to share your application with others.
+Now that you've created a sample application using SAM, you can use SAM CLI to publish it to the AWS Serverless Application Repository (AWS SAR), allowing you to share your application with others who can deploy it without needing any special developer tools.
 
 ### Add application metadata
 
@@ -39,11 +41,11 @@ Metadata:
 
 In the above sample metadata section, it specifies the MIT-0 (MIT no attribution) license as the license for the project. The LicenseUrl field specifies that the text of the license can be found in a file called `LICENSE` in the same directory as the SAM template. Go ahead and add that file. You can find the text of the MIT-0 license in the README of [this GitHub project](https://github.com/aws/mit-0).
 
-NOTE: You do not have to specify a license and license url in order to publish an app to SAR, but apps without an open source license cannot be shared publicly.
+NOTE: You do not have to specify a license and license url in order to publish an app to SAR, but apps without an open source license cannot be shared publicly. We're adding this license here since we'd like to be able to share the app publicly later on in this tutorial.
 
 ### Create a S3 bucket for packaging your SAR apps
 
-Next, use the AWS CLI to create an S3 bucket that will be used for packaging your application for publishing to SAR.
+Next, use the AWS CLI to create a S3 bucket that will be used for packaging your application for publishing to SAR.
 
 ```sh
 $ aws s3 mb s3://<your bucket name>
@@ -71,7 +73,7 @@ Next, you need to give SAR access to get objects from your packaging bucket. You
 }
 ```
 
-NOTE: Make sure to replace `<your bucket name>` with the actual name of your bucket.
+NOTE: Make sure to replace `<your bucket name>` in the above policy with the actual name of your bucket.
 
 Now use the AWS CLI to put the bucket policy to your bucket:
 
@@ -178,11 +180,11 @@ to this:
     }
 ```
 
-`os.environ['MESSAGE']` is how you retrieve an environment variable's value in python. The equivalent in Java would be `System.getenv("MESSAGE")`
+`os.environ['MESSAGE']` is how you retrieve an environment variable's value in python. Other languages will have different syntax for accessing environment variables. For example, in Java you would use `System.getenv("MESSAGE")`
 
 #### Verify the new feature works
 
-Before publishing a new version of the app to SAR, we will deploy and test it to make sure our changes work.
+Before publishing a new version of the app to SAR, we will deploy and test it to make sure our changes work as expected.
 
 ```sh
 $ sam build
@@ -251,7 +253,7 @@ Resources:
     Type: AWS::SNS::Topic
 ```
 
-This template defines a serverless application containing an [Amazon Simple Notification Service (SNS)](https://aws.amazon.com/sns) topic. Now we will embed a SAR app that connects to the Amazon SNS topic and saves any messages published to the topic to an S3 bucket.
+This template defines a serverless application containing an [Amazon Simple Notification Service (SNS)](https://aws.amazon.com/sns) topic. Now we will embed a SAR app that connects to the Amazon SNS topic, and saves any messages published to the topic to an S3 bucket.
 
 1. Go to the AWS SAR [public application search](https://serverlessrepo.aws.amazon.com/applications) and search for "event storage", and look for an app called `fork-event-storage-backup-pipeline` published by AWS in the search results. Note, you will have to check the "Show apps that create custom IAM roles or resource policies" checkbox just below the search text input in order to find this app. Once you find the app, click on it to see its details. If you have trouble finding this application, here is a [direct link](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:077246666028:applications~fork-event-storage-backup-pipeline).
 1. Click the Deploy button to be redirected to the AWS Console.
