@@ -7,7 +7,7 @@ Welcome to the re:Invent SVS217 builder session! This README walks you through s
 In order to complete this session, you must first complete the following prerequisites:
 
 1. If you do not already have an AWS account, [create one](https://portal.aws.amazon.com/billing/signup#/start).
-1. [Install](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configure](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) the AWS CLI. If you already have AWS CLI installed, verify you are running version 1.16.84 or later by running `aws --version`. If you're on an older version, upgrade your AWS CLI installation.
+1. [Install](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configure](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) the AWS CLI with credentials to make calls to your AWS account.
 1. [Install](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) the AWS SAM CLI. If you already have AWS SAM CLI installed, ensure you are running version 0.34.0 or later by running `sam --version`. If you're on an older version, upgrade your SAM CLI installation.
 
 ## Hello World App
@@ -33,8 +33,10 @@ Metadata:
     SpdxLicenseId: MIT-0
     LicenseUrl: LICENSE
     ReadmeUrl: README.md
-    Labels: ['hello-world']
+    Labels: ['hello-world', 'reinvent2019']
+    HomePageUrl: https://github.com/aws-samples/reinvent2019-svs217
     SemanticVersion: 0.0.1
+    SourceCodeUrl: https://github.com/aws-samples/reinvent2019-svs217
 ```
 
 ### Add a license file
@@ -110,6 +112,29 @@ $ sam publish --template-file packaged-template.yaml
 ```
 
 You can view your published app by going to the SAR console: https://console.aws.amazon.com/serverlessrepo/home
+
+## Deploying your application
+
+So far, you've been deploying your application to your AWS account by building, packaging, and deploying it using AWS SAM CLI. This requires that you have the source code and the appropriate development tools installed on your system. However, once you publish your app to SAR, anyone with access to the app can deploy it to their AWS account without having any tools installed.
+
+Let's deploy your app from SAR:
+
+1. Visit the [AWS Serverless Application Repository Console](https://console.aws.amazon.com/serverlessrepo/home)
+1. Click "Available applications" on the left navigation bar.
+1. Click the "Private applications" tab since, by default, your published application is private to your account.
+1. Click on your app. You will be redirected to a page to Review, configure and deploy your application.
+1. Enter a name for your application (this will be part of the stack name), fill in any required parameters, and click "Deploy".
+
+This will deploy a CloudFormation stack to your AWS account containing an instance of your SAR application. By publishing your app to SAR, others can now easily deploy your application into their AWS account with just a few clicks, no developer tools required.
+
+## Sharing your application
+
+By default, apps published to SAR are private to the publishing account, meaning only the publishing account has search and deploy permissions to the app. However, you can privately share your app with a specified list of AWS account ids or you can share your app publicly with any AWS account.
+
+1. Visit the [AWS Serverless Application Repository Console](https://console.aws.amazon.com/serverlessrepo/home)
+1. Click on the application you've published to see details for that application.
+1. Look for the section titled "Share with AWS accounts" in the lower right corner. You can use this section to share your application with individual AWS account ids or toggle your app to be public. Experiment with both options. You can specify any 12-digit number as an account id, e.g., `123456789012`. However, note, the account id could be a real AWS account id, so you should remove it before you're finished.
+1. When you toggle an app to be shared publicly, you will be able to search and deploy it from the AWS SAR [public application search](https://serverlessrepo.aws.amazon.com/).
 
 ## Updating your application
 
@@ -213,29 +238,6 @@ $ sam build
 $ sam package --template-file .aws-sam/build/template.yaml --s3-bucket <your bucket name> --output-template-file packaged-template.yaml
 $ sam publish --template-file packaged-template.yaml
 ```
-
-## Deploying your application
-
-So far, you've been deploying your application to your AWS account by building, packaging, and deploying it using AWS SAM CLI. This requires that you have the source code and the appropriate development tools installed on your system. However, once you publish your app to SAR, anyone with access to the app can deploy it to their AWS account without having any tools installed.
-
-Let's deploy your app from SAR:
-
-1. Visit the [AWS Serverless Application Repository Console](https://console.aws.amazon.com/serverlessrepo/home)
-1. Click "Available applications" on the left navigation bar.
-1. Click the "Private applications" tab since, by default, your published application is private to your account.
-1. Click on your app. You will be redirected to a page to Review, configure and deploy your application.
-1. Enter a name for your application (this will be part of the stack name), fill in any required parameters, and click "Deploy".
-
-This will deploy a CloudFormation stack to your AWS account containing an instance of your SAR application. By publishing your app to SAR, others can now easily deploy your application into their AWS account with just a few clicks, no developer tools required.
-
-## Sharing your application
-
-By default, apps published to SAR are private to the publishing account, meaning only the publishing account has search and deploy permissions to the app. However, you can privately share your app with a specified list of AWS account ids or you can share your app publicly with any AWS account.
-
-1. Visit the [AWS Serverless Application Repository Console](https://console.aws.amazon.com/serverlessrepo/home)
-1. Click on the application you've published to see details for that application.
-1. Look for the section titled "Share with AWS accounts" in the lower right corner. You can use this section to share your application with individual AWS account ids or toggle your app to be public. Experiment with both options. You can specify any 12-digit number as an account id, e.g., `123456789012`. However, note, the account id could be a real AWS account id, so you should remove it before you're finished.
-1. When you toggle an app to be shared publicly, you will be able to search and deploy it from the AWS SAR [public application search](https://serverlessrepo.aws.amazon.com/).
 
 ## Extra Credit: Nested Applications
 
