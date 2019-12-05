@@ -8,7 +8,9 @@ In order to complete this session, you must first complete the following prerequ
 
 1. If you do not already have an AWS account, [create one](https://portal.aws.amazon.com/billing/signup#/start).
 1. [Install](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configure](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) the AWS CLI with credentials to make calls to your AWS account.
-1. [Install](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) the AWS SAM CLI. If you already have AWS SAM CLI installed, ensure you are running version 0.34.0 or later by running `sam --version`. If you're on an older version, upgrade your SAM CLI installation.
+1. [Install](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) the AWS SAM CLI. Please note:
+    1. You do not need to install Docker to complete the steps of this tutorial.
+    1. If you already have AWS SAM CLI installed, ensure you are running version 0.34.0 or later by running `sam --version`. If you're on an older version, upgrade your SAM CLI installation.
 
 ## Hello World App
 
